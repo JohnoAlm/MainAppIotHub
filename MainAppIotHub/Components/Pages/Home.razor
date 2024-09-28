@@ -1,1 +1,43 @@
 ﻿@page "/"
+
+<div class="container">
+
+    <h3 class="headline">Home</h3>
+
+    <div class="devices">
+        @if(Devices != null)
+        {
+            foreach (var device in Devices)
+            {
+                // todo Add DeviceId to 'id' 
+                // todo Add DeviceState change clause to class
+                // todo Add @bind-value for DevciceState to InputCheckbox
+                // todo Add @icon to i class
+                <div id="" class="device">
+                    <div class="body">
+                        <i class=""></i>
+                    </div>
+                    <footer>
+                        <label class="switch">
+                            
+                            <InputCheckbox />
+                            <span class="slider round"></span>
+                        </label>
+                    </footer>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="preloader">
+                <i class="fa-solid fa-spinner"></i>
+            </div>
+        }
+    </div>
+</div>
+
+@code{
+
+    // todo Change 'object ' to right device type 
+    private IEnumerable<object> Devices = [];
+}
