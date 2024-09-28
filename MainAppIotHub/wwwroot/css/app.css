@@ -1,1 +1,198 @@
-﻿
+﻿@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+:root {
+    --color-background: #001429;
+    --color-headline: #FFFFFF;
+    --color-text: #C5DBF2;
+
+    --color-accent: #000000;
+    /*#FFB42F*/
+    /*#FFA624*/
+    /*#FFC53D*/
+
+    --color-navbar-background: #00080f;
+
+    --color-device-background: #04E3FF;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Open-Sans", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    color: var(--color-text);
+    background-color: var(--color-background);
+}
+
+
+h1:focus {
+    outline: none;
+}
+
+.preloader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 64px;
+}
+
+.container {
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    background-color: var(--color-navbar-background);
+    color: #414145;
+    font-size: 0.8rem;
+}
+
+    nav .active {
+        color: #B7B8BA;
+    }
+
+    nav a {
+        color: #414145;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+        nav a i {
+            font-size: 32px;
+        }
+
+    nav .container {
+        display: flex;
+        justify-content: space-between;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+.headline {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-headline);
+}
+
+.devices {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.device {
+    background: var(--color-device-background);
+    color: #8C8D8F;
+    border-radius: 18px;
+    overflow: hidden;
+    font-size: 12px;
+    transition: all 0.4s ease-in-out;
+}
+
+/* Ändra? */
+
+    .device .body {
+        text-align: center;
+        padding-top: 1.2rem;
+        padding-bottom: 1.2rem;
+    }
+
+        .device .body i {
+            font-size: 2.5em;
+            margin-bottom: 1rem;
+        }
+
+        .device .body .state {
+            font-size: 0.8em;
+        }
+
+    .device footer {
+        text-align: center;
+        padding-top: 0.8rem;
+        padding-bottom: 0.8rem;
+        background-color: rgba(0, 0, 0, 0.15);
+    }
+
+    .device.active {
+        background: rgb(65,83,90);
+        background: linear-gradient(0deg, rgba(65,83,90,1) 0%, rgba(119,149,157,0.9) 67%, rgba(179,227,236,0.8) 100%);
+        transition: all 0.4s ease-in-out;
+        color: #ffffff;
+    }
+
+        .device.active footer {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+/* Ändra? */
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    transition: all 0.4s ease-in-out;
+}
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .switch .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(47, 51, 53, 0.8);
+        transition: .4s;
+    }
+
+        .switch .slider:before {
+            position: absolute;
+            content: "";
+            height: 24px;
+            width: 24px;
+            left: 4px;
+            bottom: 3px;
+            background-color: #5A5B5F;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.30);
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+    .switch input:checked + .slider {
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+        .switch input:checked + .slider:before {
+            transform: translateX(28px);
+            background-color: #FFFFFF;
+        }
+
+    .switch .slider.round {
+        border-radius: 34px;
+    }

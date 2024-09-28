@@ -6,6 +6,7 @@
     <title>MainAppIotHub</title>
     <base href="/" />
     <!--<link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />-->
+    <script src="https://kit.fontawesome.com/3cdcda6609.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/app.css" />
     <link rel="stylesheet" href="MainAppIotHub.styles.css" />
     <link rel="icon" type="image/png" href="favicon.png" />
@@ -13,7 +14,11 @@
 
 <body>
 
-    <div id="app">Loading...</div>
+    <div id="app">
+        <div class="preloader">
+            <i class="fa-solid fa-spinner"></i>
+        </div>
+    </div>
 
     <script src="_framework/blazor.webview.js" autostart="false"></script>
 
