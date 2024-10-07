@@ -26,17 +26,26 @@ public class IotHubHandler
             var device = new IotDevice
             {
                 DeviceId = twin.DeviceId,
-                DeviceType = twin.Properties.Reported["deviceType"].ToString() ?? "",
             };
 
-            // Catches unexpected property name connectionState. Fix!
-            bool.TryParse(twin.Properties.Reported["connectionState"].ToString(), out bool connectionState);
-            device.ConnectionState = connectionState;
+            try { device.DeviceType = twin?.Properties?.Reported["deviceType"]?.ToString(); }
+            catch { device.DeviceType = "Unknown"; }
+
+            try
+            {
+                bool.TryParse(twin?.Properties?.Reported["connectionState"]?.ToString(), out bool connectionState);
+                device.ConnectionState = connectionState;
+            }
+            catch { device.ConnectionState = false; }
 
             if (device.ConnectionState)
             {
-                bool.TryParse(twin.Properties.Reported["deviceState"].ToString(), out bool deviceState);
-                device.DeviceState = deviceState;
+                try
+                {
+                    bool.TryParse(twin?.Properties?.Reported["deviceState"]?.ToString(), out bool deviceState);
+                    device.DeviceState = deviceState;
+                }
+                catch { device.DeviceState = false; }
             }
             else
             {

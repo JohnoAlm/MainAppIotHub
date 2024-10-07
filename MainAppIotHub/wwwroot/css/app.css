@@ -4,15 +4,9 @@
     --color-background: #001429;
     --color-headline: #FFFFFF;
     --color-text: #C5DBF2;
-
-    --color-accent: #000000;
-    /*#FFB42F*/
-    /*#FFA624*/
-    /*#FFC53D*/
-
+    --color-accent: #FF9800;
     --color-navbar-background: #00080f;
-
-    --color-device-background: #04E3FF;
+    --color-device-background: #122538;
 }
 
 *{
@@ -52,6 +46,14 @@ h1:focus {
     margin-right: auto;
 }
 
+#devices-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: "headline"
+                         "devices";
+    padding: 50px;
+}
+
 nav {
     position: fixed;
     bottom: 0;
@@ -89,7 +91,7 @@ nav {
     }
 
 .headline {
-    font-size: 16px;
+    font-size: 32px;
     font-weight: 600;
     color: var(--color-headline);
 }
@@ -101,7 +103,7 @@ nav {
 }
 
 .device {
-    background: var(--color-device-background);
+    background: var(--color-device-background); 
     color: #8C8D8F;
     border-radius: 18px;
     overflow: hidden;
@@ -134,8 +136,8 @@ nav {
     }
 
     .device.active {
-        background: rgb(65,83,90);
-        background: linear-gradient(0deg, rgba(65,83,90,1) 0%, rgba(119,149,157,0.9) 67%, rgba(179,227,236,0.8) 100%);
+        background: rgb(100,177,255);
+        background: linear-gradient(0deg, rgba(100,177,255,1) 0%, rgba(18,37,56,1) 100%);
         transition: all 0.4s ease-in-out;
         color: #ffffff;
     }
