@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Maui;
+using IotHubResources.Handlers;
+using MainAppIotHub.ViewModels;
 using Microsoft.Extensions.Logging;
 
 namespace MainAppIotHub
@@ -22,6 +24,9 @@ namespace MainAppIotHub
     		builder.Services.AddBlazorWebViewDeveloperTools();
     		builder.Logging.AddDebug();
 #endif
+
+            builder.Services.AddTransient<HomeViewModel>();
+            builder.Services.AddTransient<IotHubHandler>();
 
             return builder.Build();
         }

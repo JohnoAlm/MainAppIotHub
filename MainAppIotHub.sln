@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MainAppIotHub", "MainAppIotHub\MainAppIotHub.csproj", "{FD7F3EBF-F8E9-4D80-B821-B05837AE113D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IotHubResources", "IotHubResources\IotHubResources.csproj", "{52C4D7D7-8367-4918-8487-1EA1BB41CC64}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,10 @@ Global
 		{FD7F3EBF-F8E9-4D80-B821-B05837AE113D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD7F3EBF-F8E9-4D80-B821-B05837AE113D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FD7F3EBF-F8E9-4D80-B821-B05837AE113D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{52C4D7D7-8367-4918-8487-1EA1BB41CC64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52C4D7D7-8367-4918-8487-1EA1BB41CC64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52C4D7D7-8367-4918-8487-1EA1BB41CC64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52C4D7D7-8367-4918-8487-1EA1BB41CC64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
