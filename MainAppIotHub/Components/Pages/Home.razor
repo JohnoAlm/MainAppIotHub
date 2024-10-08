@@ -24,6 +24,7 @@
                     <div class="body">
                         <i class="@icon"></i>
                         <div class="title">@device.DeviceType</div>
+                        @* // Kanske lägg till en helper klass? *@
                         <div class="state">@(device.ConnectionState ? "Connected" : "Connecting...")</div>
                     </div>
 

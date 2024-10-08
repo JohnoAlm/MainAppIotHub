@@ -16,6 +16,25 @@ public class IotHubHandler
         _serviceClient = ServiceClient.CreateFromConnectionString(_connectionString);
     }
 
+    public bool Disconnect()
+    {
+        try
+        {
+            _registryManager!.Dispose();
+            _serviceClient!.Dispose();
+
+            if (_registryManager == null && _serviceClient == null)
+                return true;
+
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return false;
+        }
+    }
+
     public async Task<IEnumerable<IotDevice>> GetDevicesAsync()
     {      
         var query = _registryManager!.CreateQuery("select * from devices");
@@ -62,5 +81,46 @@ public class IotHubHandler
     {
         var methodInvocation = new CloudToDeviceMethod(methodName) { ResponseTimeout = TimeSpan.FromSeconds(10) };
         var response = await _serviceClient!.InvokeDeviceMethodAsync(deviceId, methodInvocation);
+    }
+
+    public async Task<IotDeviceInstance> RegisterDeviceAsync(string deviceId, string deviceName)
+    {
+        if (string.IsNullOrEmpty(deviceId))
+            return null!;
+
+        var iotDeviceInstance = new IotDeviceInstance
+        {
+            Device = await _registryManager!.GetDeviceAsync(deviceId) ?? await _registryManager.AddDeviceAsync(new Device(deviceId))
+        };
+
+        await UpdateDesiredPropertyAsync(iotDeviceInstance.Device, nameof(deviceName), deviceName);
+
+        iotDeviceInstance.ConnectionString = GetDeviceConnectionString(iotDeviceInstance.Device);
+        iotDeviceInstance.Properties = (await _registryManager.GetTwinAsync(iotDeviceInstance.Device.Id)).Properties;
+
+        return iotDeviceInstance;
+    }
+
+    public string GetDeviceConnectionString(Device device)
+    {
+        var iotDeviceConnectionString = $"{_connectionString!.Split(";")[0]};DeviceId={device.Id};SharedAccessKey={device.Authentication.SymmetricKey.PrimaryKey}";
+        return iotDeviceConnectionString ?? null!;
+    }
+
+    public async Task<bool> UpdateDesiredPropertyAsync(Device device, string key, string value)
+    {
+        try
+        {
+            var twin = await _registryManager!.GetTwinAsync(device.Id);
+            twin.Properties.Desired[key] = value;
+
+            await _registryManager.UpdateTwinAsync(device.Id, twin, twin.ETag);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return false;
+        }
     }
 }
