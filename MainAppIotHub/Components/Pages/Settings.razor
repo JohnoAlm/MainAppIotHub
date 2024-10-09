@@ -1,7 +1,42 @@
 ﻿@page "/settings"
+@using MainAppIotHub.ViewModels
+@inject SettingsViewModel viewModel
 
-<h3 class="headline">Settings</h3>
+<div id="settings-container" class="container">
+
+    <h3 class="headline">SETTINGS</h3>
+
+    <div class="connection">
+        <div class="body">
+            <h3>Connected to Azure IoT Hub: </h3>
+            <i class="fa-solid fa-wifi @(IsInitialized ? "initialized" : null)"></i>
+            <p>@(IsInitialized ? "(Connected)" : "(Not Connected)")</p>
+        </div>
+    </div>
+
+    <div class="settings-form">
+        <form @onsubmit="HandleSubmit">
+            <div>
+                <label for="connectionstring">Azure IoT Hub Connection String</label>
+                <input type="text" id="connectionstring" placeholder="Connection String..." @bind="viewModel.ConnectionString" />
+            </div>
+            
+            <button class="submit-btn" type="submit">Connect</button>
+        </form>
+    </div>
+
+</div>
 
 @code {
+    private bool IsInitialized;
 
+    private void HandleSubmit()
+    {
+        var result = viewModel.InitializeIotHubHandler();
+
+        if (!result)
+            IsInitialized = false;
+        else
+            IsInitialized = true;
+    }
 }

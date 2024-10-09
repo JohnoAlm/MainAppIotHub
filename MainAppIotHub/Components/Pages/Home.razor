@@ -23,7 +23,9 @@
 
                     <div class="body">
                         <i class="@icon"></i>
-                        <div class="title">@device.DeviceType</div>
+                        <div class="title">@device.DeviceName</div>
+                        <div class="type">@device.DeviceType</div>
+
                         @* // Kanske lägg till en helper klass? *@
                         <div class="state">@(device.ConnectionState ? "Connected" : "Connecting...")</div>
                     </div>
@@ -53,8 +55,17 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Devices = await viewModel.GetDevicesAsync();
-        viewModel.Timer = new Timer(async _ => await SetDevicesAsync(), null, 0, viewModel.TimerInterval);
+        var isInitialized = viewModel.EnsureInitialized();
+
+        if(isInitialized)
+        {
+            Devices = await viewModel.GetDevicesAsync();
+            viewModel.Timer = new Timer(async _ => await SetDevicesAsync(), null, 0, viewModel.TimerInterval);
+        }
+        else
+        {
+            Devices = null!;
+        }
     }
 
     private async Task SetDevicesAsync()

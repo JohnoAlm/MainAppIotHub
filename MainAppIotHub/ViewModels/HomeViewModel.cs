@@ -15,6 +15,11 @@ public class HomeViewModel
         _iotHubHandler = iotHubHandler;
     }
 
+    public bool EnsureInitialized()
+    {
+        return _iotHubHandler.EnsureInitialized();
+    }
+
     public async Task<IEnumerable<IotDevice>> GetDevicesAsync()
     {
         return await _iotHubHandler.GetDevicesAsync();

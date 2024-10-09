@@ -6,14 +6,44 @@ namespace IotHubResources.Handlers;
 
 public class IotHubHandler
 {
-    private readonly string _connectionString = "HostName=OliverA-IoTHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=6uJ9mNJgNLNBOCMBkS4Ep8gTG+no8cyv5AIoTDHkJFk=";
-    private readonly RegistryManager? _registryManager;
-    private readonly ServiceClient? _serviceClient;
+    //private readonly string _connectionString = "HostName=OliverA-IoTHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=6uJ9mNJgNLNBOCMBkS4Ep8gTG+no8cyv5AIoTDHkJFk=";
+    private string? _connectionString;
+    private  RegistryManager? _registryManager;
+    private ServiceClient? _serviceClient;
 
-    public IotHubHandler()
+    //public IotHubHandler()
+    //{
+    //    _registryManager = RegistryManager.CreateFromConnectionString(_connectionString);
+    //    _serviceClient = ServiceClient.CreateFromConnectionString(_connectionString);
+    //}
+
+    public bool EnsureInitialized()
     {
-        _registryManager = RegistryManager.CreateFromConnectionString(_connectionString);
-        _serviceClient = ServiceClient.CreateFromConnectionString(_connectionString);
+        if (_registryManager == null && _serviceClient == null)
+            return false;
+
+        return true;
+    }
+
+    public bool Initialize(string connectionString)
+    {
+        if (string.IsNullOrWhiteSpace(connectionString))
+            return false;
+
+        try
+        {
+            _registryManager = RegistryManager.CreateFromConnectionString(connectionString);
+            _serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
+
+            _connectionString = connectionString;
+
+            return true;
+        }
+        catch (Exception ex) 
+        {
+            Debug.WriteLine(ex.Message);
+            return false;
+        }
     }
 
     public bool Disconnect()
@@ -46,6 +76,9 @@ public class IotHubHandler
             {
                 DeviceId = twin.DeviceId,
             };
+
+            try { device.DeviceName = twin.Properties?.Reported["deviceName"]?.ToString(); }
+            catch { device.DeviceName = "Unknown"; }
 
             try { device.DeviceType = twin?.Properties?.Reported["deviceType"]?.ToString(); }
             catch { device.DeviceType = "Unknown"; }
