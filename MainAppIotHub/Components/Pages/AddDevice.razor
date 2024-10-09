@@ -1,11 +1,40 @@
 ﻿@page "/add"
+@using MainAppIotHub.ViewModels
+@inject AddDeviceViewModel viewModel;
 
-<h3 class="headline">ADD DEVICE</h3>
 
-<div class="container">
+<div id="add-device-container" class="container">
 
+    <h3 class="headline">ADD DEVICE</h3>
+
+    <div class="form-container">
+        <form @onsubmit="HandleSubmit">
+            <div>
+                <label for="deviceid">Device Id</label>
+                <input @bind="generatedGuid" type="text" id="deviceid" placeholder="Device Id..." />    
+                <button @onclick="GenerateRandomGuidId">Generate a Guid Id For Me!</button>
+            </div>
+            <div>
+                <label for="devicename">Device Name</label>
+                <input type="text" id="devicename" placeholder="Device Name..." />
+            </div>
+
+            <button class="submit-btn" type="submit">Add Device</button>
+        </form>
+    </div>
 </div>
 
 @code {
+    private string? generatedGuid;
+
+    private void GenerateRandomGuidId()
+    {
+        generatedGuid = Guid.NewGuid().ToString();
+    }
+
+    private void HandleSubmit()
+    {
+        
+    }
 
 }
