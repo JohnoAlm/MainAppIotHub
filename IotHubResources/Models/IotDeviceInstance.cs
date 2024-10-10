@@ -7,5 +7,5 @@ public class IotDeviceInstance
 {
     public string? ConnectionString { get; set; }
     public Device? Device { get; set; }
-    public TwinProperties? Properties { get; set; }
+    public Twin? Twin { get; set; }
 }

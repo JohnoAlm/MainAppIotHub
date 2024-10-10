@@ -1,4 +1,5 @@
 using IotHubResources.Handlers;
+using IotHubResources.Managers;
 using IotHubResources.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,12 +13,12 @@ namespace AzureFunctions.Functions
     public class DeviceRegistration
     {
         private readonly ILogger<DeviceRegistration> _logger;
-        private readonly IotHubHandler _iotHubHandler;
+        private readonly IotDeviceRegistrationManager _iotDeviceRegistrationManager;
 
-        public DeviceRegistration(ILogger<DeviceRegistration> logger, IotHubHandler iotHubHandler)
+        public DeviceRegistration(ILogger<DeviceRegistration> logger, IotDeviceRegistrationManager iotDeviceRegistrationManager)
         {
             _logger = logger;
-            _iotHubHandler = iotHubHandler;
+            _iotDeviceRegistrationManager = iotDeviceRegistrationManager;
         }
 
         [Function("DeviceRegistration")]
@@ -29,9 +30,16 @@ namespace AzureFunctions.Functions
             if (iotDeviceRegistrationRequest == null || string.IsNullOrEmpty(iotDeviceRegistrationRequest.DeviceId) || string.IsNullOrEmpty(iotDeviceRegistrationRequest.DeviceName))
                 return new BadRequestObjectResult("Invalid request. 'deviceId' or 'deviceName' is missing");
 
-            var result = await _iotHubHandler.RegisterDeviceAsync(iotDeviceRegistrationRequest.DeviceId, iotDeviceRegistrationRequest.DeviceName);
+            var result = await _iotDeviceRegistrationManager.RegisterDeviceAsync(iotDeviceRegistrationRequest.DeviceId, iotDeviceRegistrationRequest.DeviceName);
 
-            return new OkObjectResult(result);
+            var response = new IotDeviceRegistrationResponse
+            {
+                DeviceId = result.Device?.Id,
+                ConnectionString = result.ConnectionString,
+                DeviceName = result.Twin?.Properties.Desired["deviceName"].ToString()
+            };
+
+            return new OkObjectResult(response);
         }
     }
 }

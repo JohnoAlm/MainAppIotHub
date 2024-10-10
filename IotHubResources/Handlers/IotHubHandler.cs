@@ -46,25 +46,6 @@ public class IotHubHandler
         }
     }
 
-    public bool Disconnect()
-    {
-        try
-        {
-            _registryManager!.Dispose();
-            _serviceClient!.Dispose();
-
-            if (_registryManager == null && _serviceClient == null)
-                return true;
-
-            return false;
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex.Message);
-            return false;
-        }
-    }
-
     public async Task<IEnumerable<IotDevice>> GetDevicesAsync()
     {      
         var query = _registryManager!.CreateQuery("select * from devices");
@@ -110,6 +91,7 @@ public class IotHubHandler
         return devices;    
     }
 
+
     public async Task SendDirectMethodAsync(string deviceId, string methodName)
     {
         var methodInvocation = new CloudToDeviceMethod(methodName) { ResponseTimeout = TimeSpan.FromSeconds(10) };
@@ -129,7 +111,7 @@ public class IotHubHandler
         await UpdateDesiredPropertyAsync(iotDeviceInstance.Device, nameof(deviceName), deviceName);
 
         iotDeviceInstance.ConnectionString = GetDeviceConnectionString(iotDeviceInstance.Device);
-        iotDeviceInstance.Properties = (await _registryManager.GetTwinAsync(iotDeviceInstance.Device.Id)).Properties;
+        iotDeviceInstance.Twin = await _registryManager.GetTwinAsync(iotDeviceInstance.Device.Id);
 
         return iotDeviceInstance;
     }

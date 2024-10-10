@@ -1,4 +1,5 @@
 using IotHubResources.Handlers;
+using IotHubResources.Managers;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,7 +10,7 @@ var host = new HostBuilder()
     {
         services.AddApplicationInsightsTelemetryWorkerService();
         services.ConfigureFunctionsApplicationInsights();
-        services.AddSingleton<IotHubHandler>();
+        services.AddSingleton(new IotDeviceRegistrationManager(Environment.GetEnvironmentVariable("IotDeviceRegistrationManager")));
     })
     .Build();
 
