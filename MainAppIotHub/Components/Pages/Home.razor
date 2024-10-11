@@ -6,56 +6,68 @@
 <div id="devices-container" class="container">
   
     <h3 class="headline">DEVICES</h3>
+    @if (isInitialized)
+    {
+        <div class="devices">
 
-    <div class="devices">
-
-        @if(Devices != null)
-        {
-            foreach (var device in Devices)
+            @if (Devices != null)
             {
-                var icon = device?.DeviceType?.ToLower() switch
+                foreach (var device in Devices)
                 {
-                    "lamp" => "fa-regular fa-lightbulb",
-                    _ => "fa-solid fa-microchip"
-                };               
+                    var icon = device?.DeviceType?.ToLower() switch
+                    {
+                        "lamp" => "fa-regular fa-lightbulb",
+                        _ => "fa-solid fa-microchip"
+                    };
 
-                <div id="@device!.DeviceId" class="device @(device.DeviceState ? "active" : null)">
+                    <div id="@device!.DeviceId" class="device @(device.DeviceState ? "active" : null)">
 
-                    <div class="body">
-                        <i class="@icon"></i>
-                        <div class="title">@device.DeviceName</div>
-                        <div class="type">@device.DeviceType</div>
+                        <div class="body">
+                            <i class="@icon"></i>
+                            <div class="title">@device.DeviceName</div>
+                            <div class="type">@device.DeviceType</div>
 
-                        @* // Kanske lägg till en helper klass? *@
-                        <div class="state">@(device.ConnectionState ? "Connected" : "Connecting...")</div>
+                            <div class="state">@(device.ConnectionState ? "Connected" : "Connecting...")</div>
+                        </div>
+
+                        <footer>
+                            <label class="switch">
+                                <InputCheckbox @bind-Value="device.DeviceState" @onclick="() => viewModel.OnDeviceStateChanged(device)" disabled="@(device.ConnectionState == false)" />
+                                <span class="slider round"></span>
+                            </label>
+                        </footer>
+
                     </div>
-
-                    <footer>
-                        <label class="switch">               
-                            <InputCheckbox @bind-Value="device.DeviceState" @onclick="() => viewModel.OnDeviceStateChanged(device)" disabled="@(device.ConnectionState == false)" />
-                            <span class="slider round"></span>
-                        </label>
-                    </footer>
-
+                }
+            }
+            else
+            {
+                <div class="preloader">
+                    <i class="fa-solid fa-spinner fa-spin"></i>
                 </div>
             }
-        }
-        else
-        {
-            <div class="preloader">
-                <i class="fa-solid fa-spinner fa-spin"></i>
-            </div>
-        }
 
-    </div>
+        </div>
+    }
+    else
+    {
+        <div class="prompt">
+            <div class="body">
+                <h3>YOU ARE NOT CONNECTED TO AZURE IOT HUB!</h3>
+                <p>Please visit the "Settings" page to connect to Azure IoT Hub</p>
+            </div>
+        </div>
+    }
+
 </div>
 
 @code{
     private IEnumerable<IotDevice> Devices = [];
+    private bool isInitialized;
 
     protected override async Task OnInitializedAsync()
     {
-        var isInitialized = viewModel.EnsureInitialized();
+        isInitialized = viewModel.EnsureInitialized();
 
         if(isInitialized)
         {

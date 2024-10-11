@@ -87,6 +87,25 @@ nav {
     color: var(--color-headline);
 }
 
+/* Prompt */
+
+.prompt {
+    background: var(--color-device-background);
+    color: #8C8D8F;
+    border-radius: 18px;
+    overflow: hidden;
+    font-size: 12px;
+    padding: 1.2rem;
+}
+
+    .prompt .body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+
 /* Devices */
 
 #devices-container {
@@ -251,6 +270,14 @@ form {
     gap: 20px;
 }
 
+.connection-prompt {
+    background: var(--color-device-background);
+    color: #8C8D8F;
+    border-radius: 18px;
+    overflow: hidden;
+    font-size: 12px;
+}
+
 
 /* Settings */
 
@@ -263,29 +290,17 @@ form {
     gap: 20px;
 }
 
-/* Connection */
-
-.connection {
-    background: var(--color-device-background);
-    color: #8C8D8F;
-    border-radius: 18px;
-    overflow: hidden;
-    font-size: 12px;
-    transition: all 0.4s ease-in-out;
-}
-
-.connection .body{
-    display: flex;
-    align-items: center;
+#connection-status {
+    flex-direction: row;
+    justify-content: start;
     gap: 10px;
-    padding: 1.2rem;
 }
 
-    .connection .body i.fa-solid.fa-wifi {
+    .prompt .body i.fa-solid.fa-wifi {
         color: #D22B2B;
     }
 
-    .connection .body i.fa-solid.fa-wifi.initialized {
+    .prompt .body i.fa-solid.fa-wifi.initialized {
         color: #4BB543;
     }
 

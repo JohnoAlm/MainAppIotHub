@@ -6,11 +6,11 @@
 
     <h3 class="headline">SETTINGS</h3>
 
-    <div class="connection">
-        <div class="body">
-            <h3>Connected to Azure IoT Hub: </h3>
-            <i class="fa-solid fa-wifi @(IsInitialized ? "initialized" : null)"></i>
-            <p>@(IsInitialized ? "(Connected)" : "(Not Connected)")</p>
+    <div class="prompt">
+        <div id="connection-status" class="body">
+            <h3>Connection to Azure IoT Hub: </h3>
+            <i class="fa-solid fa-wifi @(isInitialized ? "initialized" : null)"></i>
+            <p>@(isInitialized ? "(Connected)" : "(Not Connected)")</p>
         </div>
     </div>
 
@@ -28,15 +28,15 @@
 </div>
 
 @code {
-    private bool IsInitialized;
+    private bool isInitialized;
 
     private void HandleSubmit()
     {
         var result = viewModel.InitializeIotHubHandler();
 
         if (!result)
-            IsInitialized = false;
+            isInitialized = false;
         else
-            IsInitialized = true;
+            isInitialized = true;
     }
 }
