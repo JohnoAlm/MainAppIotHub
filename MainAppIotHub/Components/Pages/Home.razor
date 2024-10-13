@@ -2,10 +2,11 @@
 @using IotHubResources.Models
 @using MainAppIotHub.ViewModels
 @inject HomeViewModel viewModel
+@inject NavigationManager navigation
 
 <div id="devices-container" class="container">
   
-    <h3 class="headline">DEVICES</h3>
+    <h3 class="headline"><i class="fa-solid fa-microchip"></i> | DEVICES</h3>
     @if (isInitialized)
     {
         <div class="devices">
@@ -21,6 +22,10 @@
                     };
 
                     <div id="@device!.DeviceId" class="device @(device.DeviceState ? "active" : null)">
+
+                        <div class="header">
+                            <button class="details-btn" @onclick="() => NavigateToDeviceDetails(device.DeviceId)"><i class="fa-solid fa-circle-info"></i></button>
+                        </div>
 
                         <div class="body">
                             <i class="@icon"></i>
@@ -46,13 +51,12 @@
                     <i class="fa-solid fa-spinner fa-spin"></i>
                 </div>
             }
-
         </div>
     }
     else
     {
-        <div class="prompt">
-            <div class="body">
+        <div id="azure-prompt" class="prompt">
+            <div id="azure-prompt-body" class="body">
                 <h3>YOU ARE NOT CONNECTED TO AZURE IOT HUB!</h3>
                 <p>Please visit the "Settings" page to connect to Azure IoT Hub</p>
             </div>
@@ -81,8 +85,14 @@
     }
 
     private async Task SetDevicesAsync()
-    {
+    {        
         Devices = await viewModel.GetDevicesAsync();
-        await InvokeAsync(StateHasChanged);
+        await InvokeAsync(StateHasChanged);       
+    }
+
+    private void NavigateToDeviceDetails(string? deviceId)
+    {
+        viewModel.Timer!.Dispose();
+        navigation.NavigateTo($"/devicedetails/{deviceId}", true);
     }
 }

@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui;
+﻿using Communications.Azure;
+using CommunityToolkit.Maui;
 using IotHubResources.Handlers;
 using MainAppIotHub.ViewModels;
 using Microsoft.Extensions.Logging;
@@ -27,7 +28,10 @@ namespace MainAppIotHub
 
             builder.Services.AddTransient<HomeViewModel>();
             builder.Services.AddSingleton<SettingsViewModel>();
+            builder.Services.AddTransient<DeviceDetailsViewModel>();
+
             builder.Services.AddSingleton<IotHubHandler>();
+            builder.Services.AddTransient<EmailSender>();
 
             return builder.Build();
         }

@@ -1,0 +1,50 @@
+﻿@page "/devicedetails/{DeviceId}"
+@using IotHubResources.Models
+@using MainAppIotHub.ViewModels
+@inject DeviceDetailsViewModel viewModel
+@inject NavigationManager navigation
+
+<div id="devicedetails-container" class="container">
+
+    <h3 class="headline"><i class="fa-solid fa-circle-info"></i> | Device Details</h3>
+
+    @if(Device != null)
+    {
+        <div class="prompt">
+            <div class="body">
+                <p>Id: <strong>@DeviceId</strong></p> 
+                <p>Name: <strong>@Device.DeviceName</strong></p>
+                <p>Type: <strong>@Device.DeviceType</strong></p>
+                <p>Device State: <strong>@(Device.DeviceState ? "On" : "Off")</strong></p>
+                <p>Connection State: <strong>@(Device.ConnectionState ? "Connected" : "Connecting...")</strong></p>
+
+                <button @onclick="RemoveDeviceAsync" class="remove-btn">Remove Device</button>
+            </div>         
+        </div>
+    }
+    else
+    {
+        <div class="prompt">
+            <h3>There was an error retrieving the device with id: @DeviceId</h3>
+        </div>
+    }
+
+</div>
+
+@code {
+    [Parameter]
+    public string? DeviceId { get; set; }
+
+    private IotDevice? Device;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Device = await viewModel.GetDeviceAsync(DeviceId!);
+    }
+
+    private async Task RemoveDeviceAsync()
+    {
+        await viewModel.RemoveDeviceAsync(DeviceId!);
+        navigation.NavigateTo("/");
+    }
+}

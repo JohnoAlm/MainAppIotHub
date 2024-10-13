@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MainAppIotHub", "MainAppIot
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IotHubResources", "IotHubResources\IotHubResources.csproj", "{52C4D7D7-8367-4918-8487-1EA1BB41CC64}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Communications", "Communications\Communications.csproj", "{089DEEA7-4E28-4CCC-8E9B-FB7C09986355}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{52C4D7D7-8367-4918-8487-1EA1BB41CC64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52C4D7D7-8367-4918-8487-1EA1BB41CC64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52C4D7D7-8367-4918-8487-1EA1BB41CC64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{089DEEA7-4E28-4CCC-8E9B-FB7C09986355}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{089DEEA7-4E28-4CCC-8E9B-FB7C09986355}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{089DEEA7-4E28-4CCC-8E9B-FB7C09986355}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{089DEEA7-4E28-4CCC-8E9B-FB7C09986355}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

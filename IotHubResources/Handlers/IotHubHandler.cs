@@ -86,9 +86,70 @@ public class IotHubHandler
         return devices;    
     }
 
+    public async Task<IotDevice?> GetDeviceAsync(string deviceId)
+    {
+        try
+        {
+            var twin = await _registryManager!.GetTwinAsync(deviceId);
+
+            var device = new IotDevice
+            {
+                DeviceId = twin.DeviceId
+            };
+
+            try { device.DeviceName = twin.Properties?.Reported["deviceName"]?.ToString(); }
+            catch { device.DeviceName = "Unknown"; }
+
+            try { device.DeviceType = twin?.Properties?.Reported["deviceType"]?.ToString(); }
+            catch { device.DeviceType = "Unknown"; }
+
+            try
+            {
+                bool.TryParse(twin?.Properties?.Reported["connectionState"]?.ToString(), out bool connectionState);
+                device.ConnectionState = connectionState;
+            }
+            catch { device.ConnectionState = false; }
+
+            if (device.ConnectionState)
+            {
+                try
+                {
+                    bool.TryParse(twin?.Properties?.Reported["deviceState"]?.ToString(), out bool deviceState);
+                    device.DeviceState = deviceState;
+                }
+                catch { device.DeviceState = false; }
+            }
+            else
+            {
+                device.DeviceState = false;
+            }
+
+            return device;  
+        }
+        catch (Exception ex) 
+        { 
+            Debug.WriteLine($"There was an error retrieving the device with id: {deviceId} :: {ex.Message}");
+            return null;
+        }
+    }
+
     public async Task SendDirectMethodAsync(string deviceId, string methodName)
     {
         var methodInvocation = new CloudToDeviceMethod(methodName) { ResponseTimeout = TimeSpan.FromSeconds(10) };
         var response = await _serviceClient!.InvokeDeviceMethodAsync(deviceId, methodInvocation);
+    }
+
+    public async Task<bool> RemoveDeviceAsync(string deviceId)
+    {
+        try
+        {
+            await _registryManager!.RemoveDeviceAsync(deviceId);
+            return true;
+        }
+        catch (Exception ex) 
+        { 
+            Debug.WriteLine($"There was an error in removing the device :: {ex.Message}");
+            return false;
+        }
     }
 }

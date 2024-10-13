@@ -90,20 +90,20 @@ nav {
 /* Prompt */
 
 .prompt {
+    margin-top: 10px;
     background: var(--color-device-background);
-    color: #8C8D8F;
+    color: #C2C2C2;
     border-radius: 18px;
     overflow: hidden;
     font-size: 12px;
-    padding: 1.2rem;
+    padding: 1rem;
 }
 
     .prompt .body {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
-        gap: 5px;
+        gap: 8px;
     }
 
 /* Devices */
@@ -116,6 +116,7 @@ nav {
 }
 
 .devices {
+    margin-top: 10px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
@@ -123,12 +124,20 @@ nav {
 
 .device {
     background: var(--color-device-background);
-    color: #8C8D8F;
+    color: #C2C2C2;
     border-radius: 18px;
     overflow: hidden;
     font-size: 12px;
     transition: all 0.4s ease-in-out;
 }
+
+    .device .header{
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        margin-top: 0.5rem;
+        margin-right: 1rem;
+    }
 
     .device .body {
         text-align: center;
@@ -162,6 +171,34 @@ nav {
         .device.active footer {
             background-color: rgba(0, 0, 0, 0.2);
         }
+
+#azure-prompt{
+    margin-top: 10px;
+}
+
+#azure-prompt-body{
+    align-items: center;
+}
+
+
+.details-btn {
+    background: transparent;
+    color: #FFFFFF;
+    padding: 8px;
+    border: none;
+    transition: all 0.4s;
+}
+
+.details-btn i{
+    font-size: 1.5rem;
+}
+
+
+    .details-btn:hover {
+        color: #7A7A7A;
+        cursor: pointer;
+    }
+
 
 /* Switch */
 
@@ -218,34 +255,40 @@ nav {
 
 .form-container {
     background: var(--color-device-background);
-    color: #8C8D8F;
+    color: #C2C2C2;
     border-radius: 18px;
-    padding: 1.2rem;
+    padding: 1rem;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 5px;
 }
 
     form div {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 10px;
     }
+    
+        form div label{
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: 600;
+        }
 
         form div input {
             background: transparent;
-            color: white;
+            color: #FFFFFF;
             padding: 12px;
             border: 1px solid var(--color-text);
             border-radius: 4px;
             cursor: pointer;
         }
 
-.submit-btn {
-    background: #FF9800;
+.remove-btn {
+    background: #B32B27;
     color: #FFFFFF;
     font-weight: 600;
     padding: 8px;
@@ -254,8 +297,24 @@ form {
     transition: all 0.3s;
 }
 
+    .remove-btn:hover {
+        background: #A32723;
+        cursor: pointer;
+    }
+
+
+.submit-btn {
+    background: #64B1FF;
+    color: #FFFFFF;
+    font-weight: 600;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.4s;
+}
+
     .submit-btn:hover {
-        background: #B36B00;
+        background: #006CDA;
         cursor: pointer;
     }
 
@@ -268,14 +327,6 @@ form {
     grid-template-areas: "headline"
                          "settings-form";
     gap: 20px;
-}
-
-.connection-prompt {
-    background: var(--color-device-background);
-    color: #8C8D8F;
-    border-radius: 18px;
-    overflow: hidden;
-    font-size: 12px;
 }
 
 
@@ -303,4 +354,14 @@ form {
     .prompt .body i.fa-solid.fa-wifi.initialized {
         color: #4BB543;
     }
+
+.validator {
+    font-size: 12px;
+    color: #B32B27;
+}
+
+.email-feedback-message {
+    font-size: 12px;
+    color: #4BB543;
+}
 

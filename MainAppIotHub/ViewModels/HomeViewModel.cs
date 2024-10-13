@@ -1,5 +1,6 @@
 ﻿using IotHubResources.Handlers;
 using IotHubResources.Models;
+using System.Diagnostics;
 
 namespace MainAppIotHub.ViewModels;
 
@@ -22,8 +23,8 @@ public class HomeViewModel
 
     public async Task<IEnumerable<IotDevice>> GetDevicesAsync()
     {
-        return await _iotHubHandler.GetDevicesAsync();
-    } 
+        return await _iotHubHandler.GetDevicesAsync();    
+    }
 
     public async Task OnDeviceStateChanged(IotDevice iotDevice)
     {
