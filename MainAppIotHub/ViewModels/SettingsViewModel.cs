@@ -7,6 +7,7 @@ public class SettingsViewModel
 {
     private readonly IotHubHandler _iotHubHandler;
 
+    public bool IsInitialized { get;  set; }
     public string? ConnectionString { get; set; }
     public string? Email { get; set; }
 
@@ -17,9 +18,17 @@ public class SettingsViewModel
         _iotHubHandler = iotHubHandler;
     }
 
-    public bool EnsureInitialized()
+    public void EnsureInitialized()
     {
-        return _iotHubHandler.EnsureInitialized();
+        var response = _iotHubHandler.EnsureInitialized();
+
+        if (!response.Succeeded)
+            IsInitialized = false;
+        else
+        {
+            IsInitialized = true;
+            ConnectionString = response.Content;
+        }
     }
 
     public bool InitializeIotHubHandler()

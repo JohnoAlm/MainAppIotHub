@@ -12,12 +12,18 @@ public class IotHubHandler
     private  RegistryManager? _registryManager;
     private ServiceClient? _serviceClient;
 
-    public bool EnsureInitialized()
+    public ResponseResult<string> EnsureInitialized()
     {
-        if (_registryManager == null && _serviceClient == null)
-            return false;
+        var responseResult = new ResponseResult<string>();
 
-        return true;
+        if (_connectionString == null &&_registryManager == null && _serviceClient == null)
+            responseResult.Succeeded = false;
+        else
+        {
+            responseResult.Succeeded = true;
+            responseResult.Content = _connectionString;
+        }
+        return responseResult;
     }
 
     public bool Initialize(string connectionString)

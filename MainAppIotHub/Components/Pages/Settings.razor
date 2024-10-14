@@ -9,8 +9,8 @@
     <div class="prompt">
         <div id="connection-status" class="body">
             <h3>Connection to Azure IoT Hub: </h3>
-            <i class="fa-solid fa-wifi @(isInitialized ? "initialized" : null)"></i>
-            <p>@(isInitialized ? "(Connected)" : "(Not Connected)")</p>
+            <i class="fa-solid fa-wifi @(viewModel.IsInitialized ? "initialized" : null)"></i>
+            <p>@(viewModel.IsInitialized ? "(Connected)" : "(Not Connected)")</p>
         </div>
     </div>
 
@@ -30,11 +30,8 @@
         <form @onsubmit="HandleEmailSubmit">
             <div>
                 <label for="email">Email</label>
-                @if (!string.IsNullOrWhiteSpace(viewModel.EmailFeedbackMessage))
-                {
-                    <p class="email-feedback-message"><i class="fa-solid fa-check"></i> @viewModel.EmailFeedbackMessage</p>
-                }
-                <input type="text" id="email" placeholder="Enter your email" @bind="viewModel.Email" />
+                <p class="email-feedback-message"><i class="fa-solid fa-check"></i> @viewModel.EmailFeedbackMessage</p> 
+                <input type="text" id="email" placeholder="Enter your email" @bind="viewModel.Email" />  
                 <span class="validator">@emailValidationMessage</span>
             </div>
 
@@ -42,18 +39,15 @@
         </form>
     </div>
 
-    
-
 </div>
 
 @code {
-    private bool isInitialized;
     private string? connectionStringValidationMessage;
     private string? emailValidationMessage;
 
     protected override void OnInitialized()
     {
-        isInitialized = viewModel.EnsureInitialized();
+        viewModel.EnsureInitialized();
         viewModel.LoadEmail();
     }
 
@@ -67,8 +61,15 @@
             return;
         }
 
-        viewModel.InitializeIotHubHandler();
-        isInitialized = viewModel.EnsureInitialized();
+        var success = viewModel.InitializeIotHubHandler();
+
+        if (!success)
+        {
+            connectionStringValidationMessage = "Connection to Azure IoT Hub with the specified connection string could not be made.";
+            return;
+        }
+
+        viewModel.EnsureInitialized();
     }
 
     private void HandleEmailSubmit()

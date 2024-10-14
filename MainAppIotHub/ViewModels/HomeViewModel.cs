@@ -8,6 +8,7 @@ public class HomeViewModel
 {
     private readonly IotHubHandler _iotHubHandler;
 
+    public bool IsInitialized { get; set; }
     public Timer? Timer { get; set; }
     public int TimerInterval { get; set; } = 4000;
 
@@ -16,9 +17,14 @@ public class HomeViewModel
         _iotHubHandler = iotHubHandler;
     }
 
-    public bool EnsureInitialized()
+    public void EnsureInitialized()
     {
-        return _iotHubHandler.EnsureInitialized();
+        var response = _iotHubHandler.EnsureInitialized();
+
+        if (!response.Succeeded)
+            IsInitialized = false;
+        else
+            IsInitialized = true;
     }
 
     public async Task<IEnumerable<IotDevice>> GetDevicesAsync()

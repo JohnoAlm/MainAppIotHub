@@ -7,7 +7,7 @@
 <div id="devices-container" class="container">
   
     <h3 class="headline"><i class="fa-solid fa-microchip"></i> | DEVICES</h3>
-    @if (isInitialized)
+    @if (viewModel.IsInitialized)
     {
         <div class="devices">
 
@@ -67,13 +67,12 @@
 
 @code{
     private IEnumerable<IotDevice> Devices = [];
-    private bool isInitialized;
 
     protected override async Task OnInitializedAsync()
     {
-        isInitialized = viewModel.EnsureInitialized();
+        viewModel.EnsureInitialized();
 
-        if(isInitialized)
+        if(viewModel.IsInitialized)
         {
             Devices = await viewModel.GetDevicesAsync();
             viewModel.Timer = new Timer(async _ => await SetDevicesAsync(), null, 0, viewModel.TimerInterval);
