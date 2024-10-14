@@ -90,7 +90,7 @@ nav {
 /* Prompt */
 
 .prompt {
-    margin-top: 10px;
+    margin-top: 20px;
     background: var(--color-device-background);
     color: #C2C2C2;
     border-radius: 18px;
@@ -116,7 +116,7 @@ nav {
 }
 
 .devices {
-    margin-top: 10px;
+    margin-top: 20px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
@@ -135,14 +135,13 @@ nav {
         display: flex;
         align-items: center;
         justify-content: end;
-        margin-top: 0.5rem;
         margin-right: 1rem;
     }
 
     .device .body {
         text-align: center;
-        padding-top: 1.2rem;
-        padding-bottom: 1.2rem;
+        padding-top: 0.5rem;
+        padding-bottom: 1rem;
     }
 
         .device .body i {
@@ -173,13 +172,12 @@ nav {
         }
 
 #azure-prompt{
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 #azure-prompt-body{
     align-items: center;
 }
-
 
 .details-btn {
     background: transparent;
@@ -298,7 +296,7 @@ form {
 }
 
     .remove-btn:hover {
-        background: #A32723;
+        background: #831F1C;
         cursor: pointer;
     }
 
